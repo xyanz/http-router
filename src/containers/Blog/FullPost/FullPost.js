@@ -8,16 +8,17 @@ class FullPost extends Component {
         currentPost: null
     }
 
-    componentDidUpdate (prevProps, prevState) {
-        if(this.props.id) {
+    componentDidMount () {
+        console.log('[FullPost.js]', this.props.match)
+        if(this.props.match.params.id) {
             if (!this.state.currentPost || (this.state.currentPost && this.state.currentPost.id !== this.props.id)) {
-                axios.get('/posts/' + this.props.id)
+                axios.get('/posts/' + this.props.match.params.id)
                     .then(response => {
                         // console.log(response);
                         this.setState({currentPost: response.data})
                     })
                     .catch(error => {
-                        console.log('[FullPost.js] GET: ' + error);
+                        console.log(error);
                     });
             }
         }
